@@ -1,16 +1,16 @@
-import prisma from './helpers/prismaClient';
+import express from "express";
+import cors from "cors";
 
-async function main() {
-  const teste = await prisma.post.findMany();
-  console.log(teste);
-}
+import mainRoutes from "./router";
+import appConfig from "./config/app";
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
+
+app.use(express.json());
+app.use("/api", mainRoutes);
+
+app.listen(appConfig.APP_PORT);
