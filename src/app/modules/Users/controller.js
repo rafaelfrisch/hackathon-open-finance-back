@@ -2,9 +2,9 @@ import prisma from "../../../helpers/prismaClient";
 import { cryptPassword, generateToken } from "./service";
 import { findUserByEmail } from "./core";
 import bcrypt from "bcryptjs";
+import { searchAccountByCpf } from "../../services/account";
 
-
-export const create = async (request, response, next) => {
+export const create = async (request, response) => {
   try {
     const { cpf, email, password } = request.body;
 
@@ -17,9 +17,9 @@ export const create = async (request, response, next) => {
     });
 
     response.json(user);
-    next();
   } catch (error) {
-    next(error);
+    console(error);
+    response.json(error);
   }
 };
 
@@ -50,3 +50,14 @@ export const login = async (request, response, next) => {
     return response.json(error);
   }
 };
+
+export const accountData = (req, res) => {
+  try {
+    const { cpf } = req.params;
+    const account = searchAccountByCpf(cpf)
+    res.json(account)
+  } catch (error) {
+    console.log(error)
+    res.json(error)
+  }
+}

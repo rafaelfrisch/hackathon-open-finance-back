@@ -4,9 +4,7 @@ import { publicRoutes } from "../../helpers/constants";
 const authenticationMiddleware = (req, res, next) => {
   const isRoutePublic = publicRoutes.some((routes) => routes.method === req.method && routes.path === req.path);
 
-  if (
-    isRoutePublic
-  ) {
+  if (isRoutePublic) {
     next();
     return;
   }
@@ -24,7 +22,7 @@ const authenticationMiddleware = (req, res, next) => {
     next({ statusCode: 401, message: "Token error" });
     return;
   }
-
+  
   const [scheme, token] = parts;
 
   if (!/^Bearer$/i.test(scheme)) {
