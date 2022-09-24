@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./src/server.js"
+    "start": "babel-node ./src/server.js",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
