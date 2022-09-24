@@ -2,7 +2,7 @@ import prisma from "../../../helpers/prismaClient";
 import { cryptPassword, generateToken } from "./service";
 import { findUserByEmail } from "./core";
 import bcrypt from "bcryptjs";
-import { searchAccountByCpf } from "../../services/account";
+import { searchAccountByCpf } from "./service";
 
 export const create = async (request, response) => {
   try {
