@@ -1,1 +1,3 @@
-export const middlewares = [];
+import authMiddleware from "./authentication";
+
+export const middlewares = [authMiddleware];

@@ -1,7 +1,16 @@
 export const apiUrl = "/api";
 
 export const publicRoutes = [
-  `${apiUrl}`,
-  `${apiUrl}/login`,
-  `${apiUrl}/reset-password`,
+  {
+    method: 'GET',
+    path: `${apiUrl}`,
+  },
+  {
+    method: 'POST',
+    path: `${apiUrl}/users/login`,
+  },
+  {
+    method: 'POST',
+    path: `${apiUrl}/users`,
+  },
 ];

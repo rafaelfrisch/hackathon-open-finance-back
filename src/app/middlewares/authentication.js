@@ -1,11 +1,12 @@
 import * as jwt from "jsonwebtoken";
+import { publicRoutes } from "../../helpers/constants";
 
-const authenticationMiddleware = (
-  req,
-  res,
-  next,
-) => {
-  if (publicRoutes.includes(req.path)) {
+const authenticationMiddleware = (req, res, next) => {
+  const isRoutePublic = publicRoutes.some((routes) => routes.method === req.method && routes.path === req.path);
+
+  if (
+    isRoutePublic
+  ) {
     next();
     return;
   }
@@ -31,10 +32,7 @@ const authenticationMiddleware = (
     return;
   }
 
-  const callback = (
-    err,
-    decoded,
-  ) => {
+  const callback = (err, decoded) => {
     if (err) {
       next({ statusCode: 401, message: "Token invalid" });
       return;
