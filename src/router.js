@@ -5,7 +5,7 @@ import usersRoutes from "./app/modules/Users/routes";
 const router = express.Router();
 
 router.use(systemRoutes);
-//router.use(usersRoutes);
+router.use(usersRoutes);
 
 const mainRoutes = router;
 
