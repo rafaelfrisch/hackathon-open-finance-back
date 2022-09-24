@@ -7,7 +7,6 @@ const moduleName = "/users";
 
 router.post(`${moduleName}`, create);
 router.post(`${moduleName}/login`, login);
-router.get(`${moduleName}`);
 
 const usersRoutes = router;
 
