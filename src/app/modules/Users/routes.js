@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { create } from "./controller";
+import { create, login } from "./controller";
 
 const router = Router();
 
 const moduleName = "/users";
 
 router.post(`${moduleName}`, create);
+router.post(`${moduleName}/login`, login);
 
 const usersRoutes = router;
 
