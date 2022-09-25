@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import formatCPF from "../../../helpers/formatCpf";
+import accountData from "../../services/readAccountData";
 
 dotenv.config();
 
@@ -23,5 +24,7 @@ export const generateToken = (params) => {
 
 export const searchAccountByCpf = (cpf) => {
   const parsedCpf = formatCPF(cpf);
-  console.log(parsedCpf);
+  const account = accountData.find((account_json) => account_json.customerId === parsedCpf);
+
+  return account;
 };
