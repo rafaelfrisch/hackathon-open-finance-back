@@ -63,7 +63,13 @@ export const accountData = async (req, res) => {
     const account = searchAccountByCpf(cpf);
     const { customerId, organizationId } = account;
     const creditCart = await searchCreditCartData(organizationId, customerId);
-    res.json({ account, creditCart: creditCart[0] });
+    const adicionalAccountData = await prisma.user.findFirst({
+      where: {
+        cpf
+      }
+    });
+
+    res.json({ account, creditCart: creditCart[0], adicionalAccountData });
   } catch (error) {
     console.log(error);
     res.json(error);
