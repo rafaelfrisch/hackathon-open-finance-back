@@ -2,7 +2,7 @@ import prisma from "../../../helpers/prismaClient";
 import { cryptPassword, generateToken } from "./service";
 import { findUserByEmail } from "./core";
 import bcrypt from "bcryptjs";
-import { searchAccountByCpf } from "./service";
+import { searchAccountByCpf, searchCreditCartData } from "./service";
 
 export const create = async (request, response) => {
   try {
@@ -46,18 +46,20 @@ export const login = async (request, response, next) => {
       token: jwtToken,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return response.json(error);
   }
 };
 
-export const accountData = (req, res) => {
+export const accountData = async (req, res) => {
   try {
     const { cpf } = req.params;
-    const account = searchAccountByCpf(cpf)
-    res.json(account)
+    const account = searchAccountByCpf(cpf);
+    const { customerId, organizationId } = account;
+    const creditCart = await searchCreditCartData(organizationId, customerId);
+    res.json({ account, creditCart: creditCart[0] });
   } catch (error) {
-    console.log(error)
-    res.json(error)
+    console.log(error);
+    res.json(error);
   }
-}
+};

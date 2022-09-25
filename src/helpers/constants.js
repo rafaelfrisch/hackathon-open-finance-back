@@ -1,16 +1,18 @@
 export const apiUrl = "/api";
 
+export const hackathonUrl = "https://challenge.hackathonbtg.com";
+
 export const publicRoutes = [
   {
-    method: 'GET',
+    method: "GET",
     path: `${apiUrl}`,
   },
   {
-    method: 'POST',
+    method: "POST",
     path: `${apiUrl}/users/login`,
   },
   {
-    method: 'POST',
+    method: "POST",
     path: `${apiUrl}/users`,
   },
 ];

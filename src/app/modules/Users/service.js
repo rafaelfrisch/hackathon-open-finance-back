@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import formatCPF from "../../../helpers/formatCpf";
 import accountData from "../../services/readAccountData";
+import axios from "axios";
+import hackathonUrl from "../../../helpers/constants";
 
 dotenv.config();
 
@@ -27,4 +29,16 @@ export const searchAccountByCpf = (cpf) => {
   const account = accountData.find((account_json) => account_json.customerId === parsedCpf);
 
   return account;
+};
+
+export const searchCreditCartData = async (organizationid, customerid) => {
+  const res = await axios.get("https://challenge.hackathonbtg.com" + "/credit-cards-accounts/v1/accounts", {
+    headers: {
+      organizationid,
+      customerid,
+    },
+  });
+
+  const creditCartData = res.data.data;
+  return creditCartData;
 };
