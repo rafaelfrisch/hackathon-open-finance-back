@@ -10,13 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  published Boolean  @default(false)
-
-  @@map("posts")
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -25,6 +18,20 @@ model User {
   cpf       String   @unique
   name      String?
   password  String
+  balance   Int
+
+  senderTransactions    Transaction[] @relation("sender")
+  receiverTransactions  Transaction[] @relation("receiver")
 
   @@map("users")
+}
+
+model Transaction {
+  id            Int @id
+  sender        User    @relation("sender", fields: [senderId], references: [id])
+  senderId      Int
+  receiver      User    @relation("receiver", fields: [receiverId], references: [id])
+  receiverId    Int
+
+  @@map("transactions")
 }
