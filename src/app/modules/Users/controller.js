@@ -1,5 +1,5 @@
 import prisma from "../../../helpers/prismaClient";
-import { cryptPassword, generateToken } from "./service";
+import { cryptPassword, generateToken, searchBillsTransactions } from "./service";
 import { findUserByEmail } from "./core";
 import bcrypt from "bcryptjs";
 import { searchAccountByCpf, searchCreditCartData, searchBills } from "./service";
@@ -71,6 +71,19 @@ export const creditCartData = async (req, res) => {
 
     const bills = await searchBills(creditCardAccountId, customerId, organizationId);
     res.json(bills);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
+export const billsData = async (req, res) => {
+  try {
+    const { creditCardAccountId, billId } = req.params;
+    const { customerId, organizationId } = req.query;
+
+    const transactions = await searchBillsTransactions(creditCardAccountId, billId, customerId, organizationId);
+    res.json(transactions);
   } catch (error) {
     console.log(error);
     res.json(error);

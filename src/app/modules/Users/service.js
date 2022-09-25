@@ -51,5 +51,16 @@ export const searchBills = async (creditCardAccountId, customerid, organizationi
     },
   });
 
-  return res.data.data
+  return res.data.data;
+};
+
+export const searchBillsTransactions = async (creditCardAccountId, billId, customerid, organizationid) => {
+  const res = await axios.get(hackathonUrl + "/credit-cards-accounts/v1/accounts/" + creditCardAccountId + "/bills/" + billId + "/transactions", {
+    headers: {
+      organizationid,
+      customerid,
+    },
+  });
+
+  return res.data.data;
 };
