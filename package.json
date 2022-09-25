@@ -7,7 +7,8 @@
     "start": "nodemon --exec babel-node ./src/server.js",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "server": "babel-node ./src/server.js"
   },
   "keywords": [],
   "author": "",
