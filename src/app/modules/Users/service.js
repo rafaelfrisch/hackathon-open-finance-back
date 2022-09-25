@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import formatCPF from "../../../helpers/formatCpf";
-import accountData from "../../services/readAccountData";
+import accountData from "../../data/accountsArray";
 import axios from "axios";
 import { hackathonUrl } from "../../../helpers/constants";
 
