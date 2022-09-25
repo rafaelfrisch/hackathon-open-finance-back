@@ -6,19 +6,24 @@ import { searchAccountByCpf, searchCreditCartData, searchBills } from "./service
 
 export const create = async (request, response) => {
   try {
-    const { cpf, email, password } = request.body;
+    const { cpf, email, password, name } = request.body;
 
     const user = await prisma.user.create({
       data: {
         cpf,
         email,
         password: await cryptPassword(password),
+        name,
       },
     });
 
-    response.json(user);
+    const jwtToken = generateToken({
+      email: user.email,
+    });
+
+    response.json({ user, token: jwtToken});
   } catch (error) {
-    console(error);
+    console.log(error);
     response.json(error);
   }
 };
