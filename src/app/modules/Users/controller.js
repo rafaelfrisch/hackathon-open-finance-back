@@ -21,7 +21,7 @@ export const create = async (request, response) => {
       email: user.email,
     });
 
-    response.json({ user, token: jwtToken});
+    response.json({ user, token: jwtToken });
   } catch (error) {
     console.log(error);
     response.json(error);
@@ -49,6 +49,7 @@ export const login = async (request, response, next) => {
     return response.json({
       message: "Success",
       token: jwtToken,
+      user,
     });
   } catch (error) {
     console.log(error);
