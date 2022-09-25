@@ -2,7 +2,7 @@ import prisma from "../../../helpers/prismaClient";
 import { cryptPassword, generateToken } from "./service";
 import { findUserByEmail } from "./core";
 import bcrypt from "bcryptjs";
-import { searchAccountByCpf, searchCreditCartData } from "./service";
+import { searchAccountByCpf, searchCreditCartData, searchBills } from "./service";
 
 export const create = async (request, response) => {
   try {
@@ -58,6 +58,19 @@ export const accountData = async (req, res) => {
     const { customerId, organizationId } = account;
     const creditCart = await searchCreditCartData(organizationId, customerId);
     res.json({ account, creditCart: creditCart[0] });
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
+export const creditCartData = async (req, res) => {
+  try {
+    const { creditCardAccountId } = req.params;
+    const { customerId, organizationId } = req.query;
+
+    const bills = await searchBills(creditCardAccountId, customerId, organizationId);
+    res.json(bills);
   } catch (error) {
     console.log(error);
     res.json(error);
