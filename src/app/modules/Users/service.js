@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import formatCPF from "../../../helpers/formatCpf";
 import accountData from "../../services/readAccountData";
 import axios from "axios";
-import hackathonUrl from "../../../helpers/constants";
+import { hackathonUrl } from "../../../helpers/constants";
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ export const searchAccountByCpf = (cpf) => {
 };
 
 export const searchCreditCartData = async (organizationid, customerid) => {
-  const res = await axios.get("https://challenge.hackathonbtg.com" + "/credit-cards-accounts/v1/accounts", {
+  const res = await axios.get(hackathonUrl + "/credit-cards-accounts/v1/accounts", {
     headers: {
       organizationid,
       customerid,
