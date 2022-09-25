@@ -11,27 +11,29 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
-  email     String   @unique
-  cpf       String   @unique
-  name      String?
-  password  String
-  balance   Int
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  email       String   @unique
+  cpf         String   @unique
+  name        String?
+  password    String
+  balance     Int      @default(0)
+  accountHash String   @unique @default(uuid())
 
-  senderTransactions    Transaction[] @relation("sender")
-  receiverTransactions  Transaction[] @relation("receiver")
+  senderTransactions   Transaction[] @relation("sender")
+  receiverTransactions Transaction[] @relation("receiver")
 
   @@map("users")
 }
 
 model Transaction {
-  id            Int @id
-  sender        User    @relation("sender", fields: [senderId], references: [id])
-  senderId      Int
-  receiver      User    @relation("receiver", fields: [receiverId], references: [id])
-  receiverId    Int
+  id                  Int    @id @default(autoincrement())
+  sender              User   @relation("sender", fields: [senderHashAccount], references: [accountHash])
+  senderHashAccount   String
+  receiver            User   @relation("receiver", fields: [receiverHashAccount], references: [accountHash])
+  receiverHashAccount String
+  value               Int
 
   @@map("transactions")
 }

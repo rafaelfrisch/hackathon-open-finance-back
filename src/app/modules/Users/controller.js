@@ -95,3 +95,52 @@ export const billsData = async (req, res) => {
     res.json(error);
   }
 };
+
+export const makeTransaction = async (req, res) => {
+  try {
+    const { receiverAccountHash, senderAccountHash, value } = req.body;
+
+    const sender = await prisma.user.findFirst({
+      where: {
+        accountHash: senderAccountHash,
+      },
+    });
+
+    const receiver = await prisma.user.findFirst({
+      where: {
+        accountHash: receiverAccountHash,
+      },
+    });
+
+    const transaction = await prisma.transaction.create({
+      data: {
+        senderHashAccount: senderAccountHash,
+        receiverHashAccount: receiverAccountHash,
+        value,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        accountHash: senderAccountHash,
+      },
+      data: {
+        balance: sender.balance - value,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        accountHash: receiverAccountHash,
+      },
+      data: {
+        balance: receiver.balance + value,
+      },
+    });
+
+    res.json(transaction);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};

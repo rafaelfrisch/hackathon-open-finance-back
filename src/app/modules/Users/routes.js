@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, login, accountData, creditCartData, billsData } from "./controller";
+import { create, login, accountData, creditCartData, billsData, makeTransaction } from "./controller";
 
 const router = Router();
 
@@ -10,6 +10,7 @@ router.post(`${moduleName}/login`, login);
 router.get(`${moduleName}/accountdata/:cpf`, accountData);
 router.get(`${moduleName}/creditcarddata/:creditCardAccountId`, creditCartData);
 router.get(`${moduleName}/creditcardbillstransactions/:creditCardAccountId/:billId`, billsData);
+router.post(`${moduleName}/maketransaction`, makeTransaction);
 
 
 const usersRoutes = router;
