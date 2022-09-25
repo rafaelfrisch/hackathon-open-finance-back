@@ -144,3 +144,29 @@ export const makeTransaction = async (req, res) => {
     res.json(error);
   }
 };
+
+export const getAllTransactions = async (req, res) => {
+  try {
+    const { cpf } = req.params;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        cpf,
+      },
+      include: {
+        senderTransactions: true,
+        receiverTransactions: true,
+      },
+    });
+
+    const { senderTransactions, receiverTransactions } = user;
+
+    res.json({
+      senderTransactions,
+      receiverTransactions,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
