@@ -12,6 +12,11 @@ npm run generate
 npm run migrate
 ```
 
+## Run server
+```
+npm start
+```
+
 ### Run prisma studio
 
 Prisma studio is a visual editor for the data in your database:
